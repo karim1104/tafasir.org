@@ -1,7 +1,7 @@
 // PageHeader.js
 import React, { useEffect, useState } from 'react';
-import logoLight from './logo.png';
-import logoDark from './logo-dark.png';
+import logoLight from './logo.svg';
+import logoDark from './logo-dark.svg';
 
 const isDarkThemeEnabled = () => (
   typeof document !== 'undefined' &&
