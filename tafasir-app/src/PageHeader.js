@@ -14,7 +14,7 @@ const PageHeader = ({ title, subtitle }) => {
         {title}
       </h1>
       {subtitle && (
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-base-content/70">
           {subtitle}
         </p>
       )}

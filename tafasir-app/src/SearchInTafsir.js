@@ -1,6 +1,5 @@
 // SearchInTafsir.js
 import React, { useState, useEffect } from 'react';
-import { themeChange } from 'theme-change';
 import PageHeader from './PageHeader';
 
 const API_BASE_URL = '/api';
@@ -32,31 +31,6 @@ function SearchInTafsir() {
     return () => {
       window.removeEventListener('online', updateOnlineStatus);
       window.removeEventListener('offline', updateOnlineStatus);
-    };
-  }, []);
-
-  useEffect(() => {
-    themeChange(false);
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
-    const handleThemeChange = (event) => {
-      const selectedTheme = event.target.value;
-      document.documentElement.setAttribute('data-theme', selectedTheme);
-      localStorage.setItem('theme', selectedTheme);
-    };
-
-    const themeSelector = document.querySelector('[data-choose-theme]');
-    if (themeSelector) {
-      themeSelector.value = savedTheme;
-      themeSelector.addEventListener('change', handleThemeChange);
-    }
-
-    return () => {
-      if (themeSelector) {
-        themeSelector.removeEventListener('change', handleThemeChange);
-      }
     };
   }, []);
 
@@ -212,7 +186,10 @@ function SearchInTafsir() {
     if (!searchTerm || !text) return text;
     const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`(${escaped})`, 'gi');
-    return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
+    return text.replace(
+      regex,
+      '<mark class="bg-warning/40 text-base-content rounded px-1">$1</mark>'
+    );
   };
 
   const handleMadhabChange = (e) => {

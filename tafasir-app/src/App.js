@@ -1,10 +1,9 @@
 // App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { themeChange } from 'theme-change';
 import 'tailwindcss/tailwind.css';
 import 'daisyui/dist/full.css';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 
 import PrivacyPolicy from './PrivacyPolicy';
 import Contact from './Contact';
@@ -22,38 +21,68 @@ const DownloadRedirect = () => {
   return null;
 };
 
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') {
+    return 'light';
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    return savedTheme;
+  }
+
+  if (
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  ) {
+    return 'dark';
+  }
+
+  return 'light';
+};
+
 function App() {
+  const [theme, setTheme] = useState(getInitialTheme);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    themeChange(false);
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
-    const handleThemeChange = (event) => {
-      const selectedTheme = event.target.value;
-      document.documentElement.setAttribute('data-theme', selectedTheme);
-      localStorage.setItem('theme', selectedTheme);
-    };
-
-    const themeSelector = document.querySelector('[data-choose-theme]');
-    if (themeSelector) {
-      themeSelector.value = savedTheme;
-      themeSelector.addEventListener('change', handleThemeChange);
-    }
-
-    return () => {
-      if (themeSelector) {
-        themeSelector.removeEventListener('change', handleThemeChange);
-      }
-    };
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const closeMenu = () => setMenuOpen(false);
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (
+      currentTheme === 'dark' ? 'light' : 'dark'
+    ));
+  };
 
   return (
     <Router>
       <div className="min-h-screen bg-base-100 text-base-content">
+        {/* Theme toggle button */}
+        <button
+          type="button"
+          className="fixed top-4 left-4 z-50 btn btn-circle btn-ghost shadow-sm"
+          onClick={toggleTheme}
+          aria-label={
+            theme === 'dark'
+              ? 'تفعيل الوضع الفاتح'
+              : 'تفعيل الوضع الداكن'
+          }
+          title={
+            theme === 'dark'
+              ? 'تفعيل الوضع الفاتح'
+              : 'تفعيل الوضع الداكن'
+          }
+        >
+          {theme === 'dark' ? (
+            <FiSun className="text-2xl text-warning" />
+          ) : (
+            <FiMoon className="text-2xl text-primary" />
+          )}
+        </button>
+
         {/* Floating menu button */}
         <button
           type="button"
