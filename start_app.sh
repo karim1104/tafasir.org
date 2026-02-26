@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Export variables from /var/www/app/.env if present.
+if [ -f /var/www/app/.env ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . /var/www/app/.env
+  set +a
+fi
+
 # Navigate to the React app directory and build it
 cd /var/www/app/tafasir-app
 npm run build

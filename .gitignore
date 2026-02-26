@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.venv-tools/
+
+# Environment files
+.env
+.env.*
+!.env.example
+tafasir-app/.env
+tafasir-app/.env.*
+!tafasir-app/.env.example
+
+# Frontend build artifacts
+tafasir-app/node_modules/
+tafasir-app/build/
+
+# Database dumps / backups
+db_tafasir.sql
+db_tafasir*.sql
+*.sql.gz
+*.dump
+*.bak
+database-dumps/
+backups/
+
