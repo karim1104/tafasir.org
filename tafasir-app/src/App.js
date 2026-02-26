@@ -7,6 +7,7 @@ import { FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 
 import PrivacyPolicy from './PrivacyPolicy';
 import Contact from './Contact';
+import SourceCode from './SourceCode';
 import SearchByAyah from './SearchByAyah';
 import SearchByBook from './SearchByBook';
 import SearchInTafsir from './SearchInTafsir';
@@ -162,6 +163,15 @@ function App() {
                 </li>
                 <li>
                   <Link
+                    to="/source-code"
+                    onClick={closeMenu}
+                    className="link link-hover"
+                  >
+                    SOURCE CODE
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/download"
                     onClick={closeMenu}
                     className="link link-hover"
@@ -182,6 +192,7 @@ function App() {
             <Route path="/search-in-quran" element={<SearchInQuran />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/source-code" element={<SourceCode />} />
             <Route path="/download" element={<DownloadRedirect />} />
           </Routes>
         </main>
