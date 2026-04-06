@@ -8,8 +8,8 @@ const SourceCode = () => {
       dir="rtl"
     >
       <PageHeader
-        title="SOURCE CODE"
-        subtitle="الكود المصدري وقاعدة البيانات متاحان عبر GitHub."
+        title=""
+        subtitle=""
       />
 
       <section className="mb-6">
