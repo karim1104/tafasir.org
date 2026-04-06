@@ -13,13 +13,102 @@ import SearchByBook from './SearchByBook';
 import SearchInTafsir from './SearchInTafsir';
 import SearchInQuran from './SearchInQuran';
 
-// Redirect component for the download route
-const DownloadRedirect = () => {
-  useEffect(() => {
-    window.location.href = 'https://onelink.to/6xzuc2';
-  }, []);
+const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.tafasir.org&hl=ar';
+const IOS_DOWNLOAD_URL = 'https://apps.apple.com/us/app/%D9%85%D9%88%D8%B3%D9%88%D8%B9%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1/id6612021707';
+
+const getUserAgent = () => {
+  if (typeof navigator === 'undefined') {
+    return '';
+  }
+
+  return navigator.userAgent || navigator.vendor || '';
+};
+
+const isEmbeddedWebView = () => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const userAgent = getUserAgent();
+  const isAndroidWebView = /\bwv\b/i.test(userAgent)
+    || (
+      /Android/i.test(userAgent)
+      && /Version\/[\d.]+/i.test(userAgent)
+      && !/Chrome\/[\d.]+/i.test(userAgent)
+    );
+  const isIOSWebView = /(iPhone|iPad|iPod)/i.test(userAgent)
+    && /AppleWebKit/i.test(userAgent)
+    && !/Safari/i.test(userAgent);
+
+  return isAndroidWebView
+    || isIOSWebView
+    || typeof window.ReactNativeWebView !== 'undefined';
+};
+
+const getPreferredDownloadUrl = () => {
+  const userAgent = getUserAgent();
+
+  if (/Android/i.test(userAgent)) {
+    return ANDROID_DOWNLOAD_URL;
+  }
+
+  if (/(iPhone|iPad|iPod)/i.test(userAgent)) {
+    return IOS_DOWNLOAD_URL;
+  }
 
   return null;
+};
+
+const DownloadPage = () => {
+  const embeddedWebView = isEmbeddedWebView();
+  const preferredDownloadUrl = getPreferredDownloadUrl();
+
+  useEffect(() => {
+    if (!embeddedWebView && preferredDownloadUrl) {
+      window.location.replace(preferredDownloadUrl);
+    }
+  }, [embeddedWebView, preferredDownloadUrl]);
+
+  return (
+    <section className="px-4 py-12" dir="rtl">
+      <div className="mx-auto max-w-xl rounded-3xl border border-base-300 bg-base-200/70 p-6 text-right shadow-lg">
+        <h1 className="text-2xl font-bold text-base-content">
+          تحميل تطبيق الجوال
+        </h1>
+        <p className="mt-3 leading-8 text-base-content/80">
+          {embeddedWebView
+            ? 'تم إيقاف التحويل التلقائي داخل الـ WebView حتى لا تظهر صفحة خطأ.'
+            : preferredDownloadUrl
+              ? 'إذا لم يتم تحويلك تلقائيًا، استخدم أحد الأزرار التالية.'
+              : 'اختر المتجر المناسب لتنزيل التطبيق على هاتفك.'}
+        </p>
+        {embeddedWebView && (
+          <p className="mt-3 text-sm text-warning">
+            إذا كنت تستخدم التطبيق بالفعل، فلا تحتاج إلى تنزيله مرة أخرى.
+          </p>
+        )}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={ANDROID_DOWNLOAD_URL}
+            className="btn btn-primary sm:flex-1"
+          >
+            فتح صفحة Android
+          </a>
+          <a
+            href={IOS_DOWNLOAD_URL}
+            className="btn btn-outline sm:flex-1"
+          >
+            فتح صفحة iPhone / iPad
+          </a>
+        </div>
+        <div className="mt-4">
+          <Link to="/" className="link link-hover text-sm">
+            العودة إلى الصفحة الرئيسية
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 const getInitialTheme = () => {
@@ -193,7 +282,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/source-code" element={<SourceCode />} />
-            <Route path="/download" element={<DownloadRedirect />} />
+            <Route path="/download" element={<DownloadPage />} />
           </Routes>
         </main>
       </div>

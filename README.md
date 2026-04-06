@@ -112,8 +112,6 @@ The PostgreSQL dump is hosted externally and should **not** be committed to this
 ### Download and Restore Example
 
 ```bash
-# Download
-curl -L "https://bit.ly/tafasir-db" -o db_tafasir.sql
 
 # Restore into a target database
 psql -h <host> -p 5432 -U <user> -d db_tafasir -f db_tafasir.sql
