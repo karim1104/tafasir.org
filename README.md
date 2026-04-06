@@ -106,7 +106,7 @@ The schema below was read from the live PostgreSQL database on **2026-02-26**.
 
 The PostgreSQL database .sql dump can be downloaded from:
 
-`https://bit.ly/tafasir-db`
+[https://bit.ly/tafasir-db](https://bit.ly/tafasir-db)
 
 
 Then it can imported/restored using:
