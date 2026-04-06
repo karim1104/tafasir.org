@@ -113,7 +113,7 @@ The PostgreSQL dump is hosted externally and should **not** be committed to this
 
 ```bash
 # Download (use dl=1 for direct download)
-curl -L "https://www.dropbox.com/scl/fi/jmqh9p46dkbbmyr14fhta/db_tafasir.sql?rlkey=17p6vcwcjkx62aj1kqcva6oh1&st=ygrsmah8&dl=1" -o db_tafasir.sql
+curl -L "https://www.dropbox.com/scl/fi/rnsyyuzcl99onfwphmxd6/db_tafasir.sql?rlkey=gyd7p1g5n1j2dgmbu0ih388fs&st=o6qv57t1&dl=0" -o db_tafasir.sql
 
 # Restore into a target database
 psql -h <host> -p 5432 -U <user> -d db_tafasir -f db_tafasir.sql
