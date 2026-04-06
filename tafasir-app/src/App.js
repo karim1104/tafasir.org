@@ -37,11 +37,6 @@ const DownloadPage = () => {
           <br />
           الناشر: "Tadawul Academy FZE"
         </div>
-        <div className="mt-6">
-          <Link to="/" className="btn btn-primary btn-sm">
-            العودة إلى الصفحة الرئيسية
-          </Link>
-        </div>
       </div>
     </section>
   );
