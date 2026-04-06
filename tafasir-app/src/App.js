@@ -59,6 +59,22 @@ const getPreferredDownloadUrl = () => {
   return null;
 };
 
+const openExternalUrl = (url, embeddedWebView) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+  if (newWindow) {
+    newWindow.opener = null;
+    return;
+  }
+
+  if (!embeddedWebView) {
+    window.location.assign(url);
+  }
+};
+
 const DownloadPage = () => {
   const embeddedWebView = isEmbeddedWebView();
   const preferredDownloadUrl = getPreferredDownloadUrl();
@@ -88,19 +104,27 @@ const DownloadPage = () => {
           </p>
         )}
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={ANDROID_DOWNLOAD_URL}
+          <button
+            type="button"
             className="btn btn-primary sm:flex-1"
+            onClick={() => openExternalUrl(ANDROID_DOWNLOAD_URL, embeddedWebView)}
           >
             فتح صفحة Android
-          </a>
-          <a
-            href={IOS_DOWNLOAD_URL}
+          </button>
+          <button
+            type="button"
             className="btn btn-outline sm:flex-1"
+            onClick={() => openExternalUrl(IOS_DOWNLOAD_URL, embeddedWebView)}
           >
             فتح صفحة iPhone / iPad
-          </a>
+          </button>
         </div>
+        {embeddedWebView && (
+          <p className="mt-4 text-sm leading-7 text-base-content/70">
+            إذا لم يفتح المتجر مباشرة، فسبب ذلك غالبًا من إعدادات الـ WebView داخل
+            التطبيق نفسه وليس من الموقع.
+          </p>
+        )}
         <div className="mt-4">
           <Link to="/" className="link link-hover text-sm">
             العودة إلى الصفحة الرئيسية

@@ -113,12 +113,6 @@ Then it can imported/restored using:
 
 ```bash
 
-# Restore into a target database
 psql -h <host> -p 5432 -U <user> -d db_tafasir -f db_tafasir.sql
 ```
 
-## Public Repo Safety Notes
-
-- Secrets must stay in env vars (`.env`) and never in source files.
-- `.gitignore` blocks local env files and DB backup artifacts.
-- Large DB dumps are kept in external storage (Dropbox), not Git/GitHub.
