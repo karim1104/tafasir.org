@@ -1,6 +1,9 @@
 # tafasir.org
 
-`tafasir.org` is a two-part application:
+This GitHub repository contains the web application for `tafasir.org`.
+The mobile app is a separate WebView wrapper around the web app and is not included in this repository.
+
+`tafasir.org` itself is a two-part application:
 
 - A FastAPI backend that serves Qur'an/Tafsir data from PostgreSQL.
 - A React frontend (`tafasir-app/`) that calls backend endpoints under `/api`.
@@ -121,4 +124,3 @@ psql -h <host> -p 5432 -U <user> -d db_tafasir -f db_tafasir.sql
 - Secrets must stay in env vars (`.env`) and never in source files.
 - `.gitignore` blocks local env files and DB backup artifacts.
 - Large DB dumps are kept in external storage (Dropbox), not Git/GitHub.
-
