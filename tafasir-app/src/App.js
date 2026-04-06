@@ -13,78 +13,7 @@ import SearchByBook from './SearchByBook';
 import SearchInTafsir from './SearchInTafsir';
 import SearchInQuran from './SearchInQuran';
 
-const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.tafasir.org&hl=ar';
-const IOS_DOWNLOAD_URL = 'https://apps.apple.com/us/app/%D9%85%D9%88%D8%B3%D9%88%D8%B9%D8%A9-%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1/id6612021707';
-
-const getUserAgent = () => {
-  if (typeof navigator === 'undefined') {
-    return '';
-  }
-
-  return navigator.userAgent || navigator.vendor || '';
-};
-
-const isEmbeddedWebView = () => {
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  const userAgent = getUserAgent();
-  const isAndroidWebView = /\bwv\b/i.test(userAgent)
-    || (
-      /Android/i.test(userAgent)
-      && /Version\/[\d.]+/i.test(userAgent)
-      && !/Chrome\/[\d.]+/i.test(userAgent)
-    );
-  const isIOSWebView = /(iPhone|iPad|iPod)/i.test(userAgent)
-    && /AppleWebKit/i.test(userAgent)
-    && !/Safari/i.test(userAgent);
-
-  return isAndroidWebView
-    || isIOSWebView
-    || typeof window.ReactNativeWebView !== 'undefined';
-};
-
-const getPreferredDownloadUrl = () => {
-  const userAgent = getUserAgent();
-
-  if (/Android/i.test(userAgent)) {
-    return ANDROID_DOWNLOAD_URL;
-  }
-
-  if (/(iPhone|iPad|iPod)/i.test(userAgent)) {
-    return IOS_DOWNLOAD_URL;
-  }
-
-  return null;
-};
-
-const openExternalUrl = (url, embeddedWebView) => {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-  if (newWindow) {
-    newWindow.opener = null;
-    return;
-  }
-
-  if (!embeddedWebView) {
-    window.location.assign(url);
-  }
-};
-
 const DownloadPage = () => {
-  const embeddedWebView = isEmbeddedWebView();
-  const preferredDownloadUrl = getPreferredDownloadUrl();
-
-  useEffect(() => {
-    if (!embeddedWebView && preferredDownloadUrl) {
-      window.location.replace(preferredDownloadUrl);
-    }
-  }, [embeddedWebView, preferredDownloadUrl]);
-
   return (
     <section className="px-4 py-12" dir="rtl">
       <div className="mx-auto max-w-xl rounded-3xl border border-base-300 bg-base-200/70 p-6 text-right shadow-lg">
@@ -92,41 +21,24 @@ const DownloadPage = () => {
           تحميل تطبيق الجوال
         </h1>
         <p className="mt-3 leading-8 text-base-content/80">
-          {embeddedWebView
-            ? 'تم إيقاف التحويل التلقائي داخل الـ WebView حتى لا تظهر صفحة خطأ.'
-            : preferredDownloadUrl
-              ? 'إذا لم يتم تحويلك تلقائيًا، استخدم أحد الأزرار التالية.'
-              : 'اختر المتجر المناسب لتنزيل التطبيق على هاتفك.'}
+          لتحميل التطبيق على الجوال، الرجاء البحث عن
+          {' '}
+          <span className="font-semibold">"موسوعة التفاسير"</span>
+          {' '}
+          من
+          {' '}
+          <span className="font-semibold">"Tadawul Academy FZE"</span>.
         </p>
-        {embeddedWebView && (
-          <p className="mt-3 text-sm text-warning">
-            إذا كنت تستخدم التطبيق بالفعل، فلا تحتاج إلى تنزيله مرة أخرى.
-          </p>
-        )}
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
-            className="btn btn-primary sm:flex-1"
-            onClick={() => openExternalUrl(ANDROID_DOWNLOAD_URL, embeddedWebView)}
-          >
-            فتح صفحة Android
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline sm:flex-1"
-            onClick={() => openExternalUrl(IOS_DOWNLOAD_URL, embeddedWebView)}
-          >
-            فتح صفحة iPhone / iPad
-          </button>
+        <p className="mt-4 text-sm leading-7 text-base-content/70">
+          يمكنك كتابة اسم التطبيق واسم الناشر في متجر التطبيقات للوصول إليه مباشرة.
+        </p>
+        <div className="mt-6 rounded-2xl bg-base-100 p-4 text-sm leading-7 text-base-content/80 shadow-sm">
+          الاسم: "موسوعة التفاسير"
+          <br />
+          الناشر: "Tadawul Academy FZE"
         </div>
-        {embeddedWebView && (
-          <p className="mt-4 text-sm leading-7 text-base-content/70">
-            إذا لم يفتح المتجر مباشرة، فسبب ذلك غالبًا من إعدادات الـ WebView داخل
-            التطبيق نفسه وليس من الموقع.
-          </p>
-        )}
-        <div className="mt-4">
-          <Link to="/" className="link link-hover text-sm">
+        <div className="mt-6">
+          <Link to="/" className="btn btn-primary btn-sm">
             العودة إلى الصفحة الرئيسية
           </Link>
         </div>
