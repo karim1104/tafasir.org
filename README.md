@@ -102,14 +102,14 @@ The schema below was read from the live PostgreSQL database on **2026-02-26**.
 3. `npm install`
 4. `npm start`
 
-## Database Dump (Not Stored In Git)
+### Download and Restore Database
 
-The PostgreSQL dump is hosted externally and should **not** be committed to this repo.
+The PostgreSQL database .sql dump can be downloaded from:
 
-- Download URL:
-  - `https://bit.ly/tafasir-db`
+`https://bit.ly/tafasir-db`
 
-### Download and Restore Example
+
+Then it can imported/restored using:
 
 ```bash
 
