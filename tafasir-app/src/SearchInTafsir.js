@@ -18,7 +18,7 @@ function SearchInTafsir() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [expandedResults, setExpandedResults] = useState({});
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(null);
 
   useEffect(() => {
     const updateOnlineStatus = () => {
@@ -102,7 +102,7 @@ function SearchInTafsir() {
   }, [selectedMadhab, isOnline]);
 
   const handleSearch = () => {
-    if (!searchTerm || (!selectedTafsir && selectedTafsir !== 'all')) {
+    if (!searchTerm.trim() || (!selectedTafsir && selectedTafsir !== 'all')) {
       return;
     }
 
@@ -111,7 +111,7 @@ function SearchInTafsir() {
     setSearchResults([]);
     setPage(1);
     setExpandedResults({});
-    setTotalCount(0);
+    setTotalCount(null);
 
     performSearch(1);
   };
@@ -125,11 +125,14 @@ function SearchInTafsir() {
       tafsirNumbers = selectedTafsir;
     }
 
-    fetch(
-      `${API_BASE_URL}/search_tafsir?search_term=${encodeURIComponent(
-        searchTerm
-      )}&tafsir_numbers=${tafsirNumbers}&page=${pageNumber}&limit=10`
-    )
+    const params = new URLSearchParams({
+      search_term: searchTerm.trim(),
+      tafsir_numbers: tafsirNumbers,
+      page: String(pageNumber),
+      limit: '10',
+    });
+
+    fetch(`${API_BASE_URL}/search_tafsir?${params.toString()}`)
       .then((response) => response.json())
       .then((data) => {
         if (pageNumber === 1) {
@@ -140,7 +143,9 @@ function SearchInTafsir() {
         setHasMore(data.has_more);
         setNoResultsFound(pageNumber === 1 && data.results.length === 0);
         setIsSearching(false);
-        setTotalCount(data.total_count || 0);
+        if (typeof data.total_count === 'number') {
+          setTotalCount(data.total_count);
+        }
       })
       .catch((error) => {
         console.error('Error searching tafsirs:', error);
@@ -290,7 +295,7 @@ function SearchInTafsir() {
           disabled={
             !isOnline ||
             isSearching ||
-            !searchTerm ||
+            !searchTerm.trim() ||
             (!selectedTafsir && selectedTafsir !== 'all')
           }
         >
@@ -306,9 +311,10 @@ function SearchInTafsir() {
 
       {searchResults.length > 0 && (
         <div className="mb-4">
-          {/* ← your new heading-style line */}
           <h2 className="text-xl font-bold mb-4 text-right">
-            عدد المقاطع المطابقة: {totalCount}
+            {typeof totalCount === 'number'
+              ? `عدد المقاطع المطابقة: ${totalCount}`
+              : 'المقاطع المطابقة لعبارة البحث'}
           </h2>
 
           {searchResults.map((result, index) => (

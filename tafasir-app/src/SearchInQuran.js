@@ -12,7 +12,7 @@ function SearchInQuran() {
   const [noResultsFound, setNoResultsFound] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(null);
 
   // Data for tafsir-by-result feature
   const [madhabs, setMadhabs] = useState([]);
@@ -55,13 +55,13 @@ function SearchInQuran() {
   }, [isOnline]);
 
   const handleSearch = () => {
-    if (!searchTerm) return;
+    if (!searchTerm.trim()) return;
 
     setIsSearching(true);
     setNoResultsFound(false);
     setSearchResults([]);
     setPage(1);
-    setTotalCount(0);
+    setTotalCount(null);
 
     // Reset per-result tafsir state when starting a new search
     setSelectedMadhabByResult({});
@@ -75,11 +75,13 @@ function SearchInQuran() {
   };
 
   const performSearch = (pageNumber) => {
-    fetch(
-      `${API_BASE_URL}/search_ayahs?search_term=${encodeURIComponent(
-        searchTerm
-      )}&page=${pageNumber}&limit=10`
-    )
+    const params = new URLSearchParams({
+      search_term: searchTerm.trim(),
+      page: String(pageNumber),
+      limit: '10',
+    });
+
+    fetch(`${API_BASE_URL}/search_ayahs?${params.toString()}`)
       .then((response) => response.json())
       .then((data) => {
         const results = data.results || [];
@@ -89,7 +91,9 @@ function SearchInQuran() {
           setSearchResults((prev) => [...prev, ...results]);
         }
         setHasMore(!!data.has_more);
-        setTotalCount(data.total_count || 0);
+        if (typeof data.total_count === 'number') {
+          setTotalCount(data.total_count);
+        }
         setNoResultsFound(pageNumber === 1 && results.length === 0);
         setIsSearching(false);
       })
@@ -289,7 +293,7 @@ function SearchInQuran() {
         <button
           className="btn btn-primary w-full"
           onClick={handleSearch}
-          disabled={!isOnline || isSearching || !searchTerm}
+          disabled={!isOnline || isSearching || !searchTerm.trim()}
         >
           {isSearching ? 'جاري البحث...' : 'ابحث في الآيات'}
         </button>
@@ -304,7 +308,10 @@ function SearchInQuran() {
       {searchResults.length > 0 && (
         <div className="mb-4">
           <h2 className="text-xl font-bold mb-4 text-right">
-            تم العثور على {totalCount} آية تحتوي على "{searchTerm}"
+            {typeof totalCount === 'number'
+              ? `تم العثور على ${totalCount} آية تحتوي على "${searchTerm.trim()}"`
+              : `نتائج الآيات المطابقة لعبارة "${searchTerm.trim()}"`
+            }
           </h2>
 
           {searchResults.map((result) => {
