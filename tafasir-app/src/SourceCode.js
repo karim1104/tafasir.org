@@ -9,81 +9,43 @@ const SourceCode = () => {
     >
       <PageHeader
         title="SOURCE CODE"
-        subtitle="روابط الكود المصدري وتفريغ قاعدة البيانات"
+        subtitle="الكود المصدري وقاعدة البيانات متاحان عبر GitHub."
       />
 
       <section className="mb-6">
-        <h2 className="text-xl font-bold mb-2 text-left" dir="ltr">
-          English
-        </h2>
-        <p className="mb-2 text-left" dir="ltr">
-          Source code and database dump can be found here:
+        <h2 className="text-xl font-bold mb-2">العربية</h2>
+        <p className="mb-2">
+          الكود المصدري وقاعدة البيانات متاحان على GitHub:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-left" dir="ltr">
-          <li>
-            GitHub repository:{' '}
-            <a
-              href="https://github.com/karim1104/tafasir.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              https://github.com/karim1104/tafasir.org
-            </a>
-          </li>
-          <li>
-            PostgreSQL database dump:{' '}
-            <a
-              href="https://www.dropbox.com/scl/fi/jmqh9p46dkbbmyr14fhta/db_tafasir.sql?rlkey=17p6vcwcjkx62aj1kqcva6oh1&st=ygrsmah8&dl=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              db_tafasir.sql (Dropbox)
-            </a>
-          </li>
-        </ul>
-        <p className="mt-3 text-left" dir="ltr">
-          Instructions: download the SQL file, create a PostgreSQL database,
-          then import it using <code>psql -d db_tafasir -f db_tafasir.sql</code>.
+        <p>
+          <a
+            href="https://github.com/karim1104/tafasir.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+            dir="ltr"
+          >
+            github.com/karim1104/tafasir.org
+          </a>
         </p>
       </section>
 
       <section>
-        <h2 className="text-xl font-bold mb-2">العربية</h2>
-        <p className="mb-2">
-          يمكن العثور على الكود المصدري وتفريغ قاعدة البيانات هنا:
+        <h2 className="text-xl font-bold mb-2 text-left" dir="ltr">
+          English
+        </h2>
+        <p className="mb-2 text-left" dir="ltr">
+          The source code and database are available on GitHub:
         </p>
-        <ul className="list-disc pr-6 space-y-2">
-          <li>
-            مستودع GitHub:{' '}
-            <a
-              href="https://github.com/karim1104/tafasir.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-              dir="ltr"
-            >
-              https://github.com/karim1104/tafasir.org
-            </a>
-          </li>
-          <li>
-            ملف تفريغ قاعدة بيانات PostgreSQL:{' '}
-            <a
-              href="https://www.dropbox.com/scl/fi/jmqh9p46dkbbmyr14fhta/db_tafasir.sql?rlkey=17p6vcwcjkx62aj1kqcva6oh1&st=ygrsmah8&dl=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              db_tafasir.sql (Dropbox)
-            </a>
-          </li>
-        </ul>
-        <p className="mt-3">
-          التعليمات: قم بتنزيل ملف SQL، ثم أنشئ قاعدة بيانات PostgreSQL،
-          وبعدها نفّذ أمر الاستيراد:
-          <br />
-          <code dir="ltr">psql -d db_tafasir -f db_tafasir.sql</code>
+        <p className="text-left" dir="ltr">
+          <a
+            href="https://github.com/karim1104/tafasir.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            github.com/karim1104/tafasir.org
+          </a>
         </p>
       </section>
     </div>

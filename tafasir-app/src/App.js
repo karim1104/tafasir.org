@@ -12,14 +12,19 @@ import SearchByAyah from './SearchByAyah';
 import SearchByBook from './SearchByBook';
 import SearchInTafsir from './SearchInTafsir';
 import SearchInQuran from './SearchInQuran';
+import PageHeader from './PageHeader';
 
 const DownloadPage = () => {
   return (
-    <section className="px-4 py-12" dir="rtl">
-      <div className="mx-auto max-w-xl rounded-3xl border border-base-300 bg-base-200/70 p-6 text-right shadow-lg">
-        <h1 className="text-2xl font-bold text-base-content">
-          تحميل تطبيق الجوال
-        </h1>
+    <div
+      className="container mx-auto p-4 bg-base-100 text-base-content"
+      dir="rtl"
+    >
+      <PageHeader
+        title="تحميل تطبيق الجوال"
+        subtitle="يمكنك العثور على التطبيق من خلال البحث عنه في متجر التطبيقات."
+      />
+      <section className="mx-auto max-w-xl rounded-3xl border border-base-300 bg-base-200/70 p-6 text-right shadow-lg">
         <p className="mt-3 leading-8 text-base-content/80">
           لتحميل التطبيق على الجوال، الرجاء البحث عن
           {' '}
@@ -37,8 +42,8 @@ const DownloadPage = () => {
           <br />
           الناشر: "Tadawul Academy FZE"
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
