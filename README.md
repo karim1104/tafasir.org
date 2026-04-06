@@ -104,7 +104,7 @@ The schema below was read from the live PostgreSQL database on **2026-02-26**.
 The PostgreSQL dump is hosted externally and should **not** be committed to this repo.
 
 - Dropbox URL:
-  - `https://www.dropbox.com/scl/fi/jmqh9p46dkbbmyr14fhta/db_tafasir.sql?rlkey=17p6vcwcjkx62aj1kqcva6oh1&st=ygrsmah8&dl=0`
+  - `https://www.dropbox.com/scl/fi/rnsyyuzcl99onfwphmxd6/db_tafasir.sql?rlkey=gyd7p1g5n1j2dgmbu0ih388fs&st=o6qv57t1&dl=0`
 
 ### Download and Restore Example
 
