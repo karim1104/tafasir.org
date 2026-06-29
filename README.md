@@ -243,7 +243,7 @@ npm start
 
 The PostgreSQL database dump can be downloaded from:
 
-[https://bit.ly/tafasir-db](https://bit.ly/tafasir-db)
+[https://bit.ly/tafasir-database](https://bit.ly/tafasir-database)
 
 Then it can be imported/restored using:
 
