@@ -8,6 +8,8 @@ from models import Base, Language, Madhab, Sura, Ayah, Tafsir, TafsirText
 
 app = FastAPI(title="Tafasir API")
 
+HIDDEN_TAFSIR_IDS = (130,)  # Tafsir number 52 is a duplicate kept in the database.
+
 SEARCH_INDEX_DDL = (
     "CREATE EXTENSION IF NOT EXISTS pg_trgm",
     """
@@ -87,7 +89,12 @@ async def get_madhabs(session: AsyncSession = Depends(get_session)):
 @app.get("/tafsirs")
 async def get_tafsirs(madhab_numbers: str, session: AsyncSession = Depends(get_session)):
     madhab_numbers = [int(mn) for mn in madhab_numbers.split(",")]
-    result = await session.execute(select(Tafsir).where(Tafsir.madhab_number.in_(madhab_numbers)))
+    result = await session.execute(
+        select(Tafsir).where(
+            Tafsir.madhab_number.in_(madhab_numbers),
+            Tafsir.id.notin_(HIDDEN_TAFSIR_IDS),
+        )
+    )
     tafsirs = result.scalars().all()
     # Include author_death and description in the response
     return [
@@ -104,7 +111,10 @@ async def get_tafsirs(madhab_numbers: str, session: AsyncSession = Depends(get_s
 @app.get("/tafsirs/count")
 async def get_tafsir_count(madhab_number: int, session: AsyncSession = Depends(get_session)):
     count = await session.execute(
-        select(func.count(Tafsir.id)).where(Tafsir.madhab_number == madhab_number)
+        select(func.count(Tafsir.id)).where(
+            Tafsir.madhab_number == madhab_number,
+            Tafsir.id.notin_(HIDDEN_TAFSIR_IDS),
+        )
     )
     return count.scalar()
 
