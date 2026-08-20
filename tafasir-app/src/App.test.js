@@ -1,8 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+const originalOnlineStatus = navigator.onLine;
+
+beforeEach(() => {
+  Object.defineProperty(navigator, 'onLine', {
+    configurable: true,
+    value: false,
+  });
+});
+
+afterEach(() => {
+  Object.defineProperty(navigator, 'onLine', {
+    configurable: true,
+    value: originalOnlineStatus,
+  });
+});
+
+test('renders the main tafsir search page', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', { name: 'التفسير حسب السورة والآية' })
+  ).toBeInTheDocument();
 });
