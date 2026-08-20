@@ -434,7 +434,7 @@ function SearchByAyah() {
             </button>
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-outline btn-primary"
               onClick={() => handleAdjacentAyah(1)}
               disabled={!canShowNextAyah || isLoadingResult}
             >
@@ -483,7 +483,7 @@ function SearchByAyah() {
           </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-outline btn-primary"
             onClick={() => handleAdjacentAyah(1)}
             disabled={!canShowNextAyah || isLoadingResult}
           >
