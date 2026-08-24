@@ -26,3 +26,4 @@ db_tafasir*.sql
 database-dumps/
 backups/
 
+export_tafsirs.py
