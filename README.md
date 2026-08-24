@@ -239,17 +239,33 @@ npm install
 npm start
 ```
 
-## Download Tafsir Text Files
+## Download Tafsir Files
 
-The exported UTF-8 tafsir text files are available in the
+The exported UTF-8 tafsir TXT and CSV files are available in the
 [`التفاسير/` directory](https://github.com/karim1104/tafasir.org/tree/main/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1).
 They are organized as follows:
 
 ```text
-التفاسير/{madhab}/{tafsir_name}/surah_{surah_number}/ayah_{ayah_number}.txt
+التفاسير/
+├── txt/
+│   └── {madhab}/{tafsir_name}/surah_{NNN}/ayah_{NNN}.txt
+└── csv/
+    └── {madhab}/{tafsir_name}/surah_{NNN}.csv
 ```
 
-To download all the text files at once, [download the repository as a ZIP
+Surah and ayah numbers in file and directory names are zero-padded to three
+digits (for example, `surah_001` and `ayah_007.txt`). Each surah CSV contains
+one row per exported ayah and has these columns:
+
+```text
+surah_number,ayah_number,tafsir_text
+```
+
+Before writing either format, the exporter removes numeric footnote markers
+such as `{[4314]}` and strips HTML markup. HTML break and block tags are
+converted to plain-text paragraph breaks.
+
+To download all the files at once, [download the repository as a ZIP
 archive](https://github.com/karim1104/tafasir.org/archive/refs/heads/main.zip) and
 open its `التفاسير/` directory.
 
