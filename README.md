@@ -239,6 +239,20 @@ npm install
 npm start
 ```
 
+## Download Tafsir Text Files
+
+The exported UTF-8 tafsir text files are available in the
+[`التفاسير/` directory](https://github.com/karim1104/tafasir.org/tree/main/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B3%D9%8A%D8%B1).
+They are organized as follows:
+
+```text
+التفاسير/{madhab}/{tafsir_name}/surah_{surah_number}/ayah_{ayah_number}.txt
+```
+
+To download all the text files at once, [download the repository as a ZIP
+archive](https://github.com/karim1104/tafasir.org/archive/refs/heads/main.zip) and
+open its `التفاسير/` directory.
+
 ## Download and Restore Database
 
 The PostgreSQL database dump can be downloaded from:
