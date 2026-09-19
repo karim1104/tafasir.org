@@ -1,6 +1,7 @@
 // SearchInQuran.js
 import React, { useState, useEffect } from 'react';
 import PageHeader from './PageHeader';
+import { formatArabicCount, AYAH_FORMS } from './resultCount';
 
 const API_BASE_URL = '/api';
 
@@ -80,6 +81,12 @@ function SearchInQuran() {
       page: String(pageNumber),
       limit: '10',
     });
+
+    // The total is only needed once per search, and counting every match is
+    // the expensive half of the query, so ask for it on the first page only.
+    if (pageNumber === 1) {
+      params.set('include_total', 'true');
+    }
 
     fetch(`${API_BASE_URL}/search_ayahs?${params.toString()}`)
       .then((response) => response.json())
@@ -309,7 +316,7 @@ function SearchInQuran() {
         <div className="mb-4">
           <h2 className="text-xl font-bold mb-4 text-right">
             {typeof totalCount === 'number'
-              ? `تم العثور على ${totalCount} آية تحتوي على "${searchTerm.trim()}"`
+              ? `تم العثور على ${formatArabicCount(totalCount, AYAH_FORMS)} تحتوي على "${searchTerm.trim()}"`
               : `نتائج الآيات المطابقة لعبارة "${searchTerm.trim()}"`
             }
           </h2>

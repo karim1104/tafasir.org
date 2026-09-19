@@ -1,6 +1,7 @@
 // SearchInTafsir.js
 import React, { useState, useEffect } from 'react';
 import PageHeader from './PageHeader';
+import { formatArabicCount, PASSAGE_FORMS } from './resultCount';
 
 const API_BASE_URL = '/api';
 
@@ -131,6 +132,12 @@ function SearchInTafsir() {
       page: String(pageNumber),
       limit: '10',
     });
+
+    // The total is only needed once per search, and counting every match is
+    // the expensive half of the query, so ask for it on the first page only.
+    if (pageNumber === 1) {
+      params.set('include_total', 'true');
+    }
 
     fetch(`${API_BASE_URL}/search_tafsir?${params.toString()}`)
       .then((response) => response.json())
@@ -313,7 +320,7 @@ function SearchInTafsir() {
         <div className="mb-4">
           <h2 className="text-xl font-bold mb-4 text-right">
             {typeof totalCount === 'number'
-              ? `عدد المقاطع المطابقة: ${totalCount}`
+              ? `تم العثور على ${formatArabicCount(totalCount, PASSAGE_FORMS)} تحتوي على "${searchTerm.trim()}"`
               : 'المقاطع المطابقة لعبارة البحث'}
           </h2>
 
