@@ -273,7 +273,7 @@ open its `التفاسير/` directory.
 
 The PostgreSQL database dump can be downloaded from:
 
-[https://bit.ly/tafasir-database](https://bit.ly/tafasir-database)
+[https://bit.ly/4AuDtRr](https://bit.ly/4AuDtRr)
 
 Then it can be imported/restored using:
 
